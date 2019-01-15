@@ -147,6 +147,9 @@ export default {
                             }
                             mesh.material.transparent = options.opacity < 1.0;
                             mesh.material.opacity = options.opacity;
+                            if (options.forceDoubleSide) {
+                                mesh.material.side = THREE.DoubleSide;
+                            }
                         }
                     };
                     gltf.scene.traverse(init_mesh);

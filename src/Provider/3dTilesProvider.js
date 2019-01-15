@@ -150,6 +150,7 @@ function b3dmToMesh(data, layer, url) {
         overrideMaterials: layer.overrideMaterials,
         doNotPatchMaterial: layer.doNotPatchMaterial,
         opacity: layer.opacity,
+        forceDoubleSide: layer.forceDoubleSide,
     };
     return B3dmParser.parse(data, options).then((result) => {
         const batchTable = result.batchTable;
