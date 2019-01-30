@@ -21,7 +21,7 @@
         <script src="../dist/debug.js"></script>
         <script type="text/javascript">
             /* global itowns,document,GuiTools*/
-            var positionOnGlobe = { longitude: -75.61, latitude: 40.04, altitude: 50000 }
+            var positionOnGlobe = { longitude: 0.048, latitude: 49.151, altitude: 5000 }
             // iTowns namespace defined here
             var viewerDiv = document.getElementById('viewerDiv');
 
@@ -37,9 +37,19 @@
                 view.addLayer(layer).then(menuGlobe.addLayerGUI.bind(menuGlobe));
             });
 
+            // Add two elevation layers.
+            // These will deform iTowns globe geometry to represent terrain elevation.
+            function addElevationLayerFromConfig(config) {
+                config.source = new itowns.WMTSSource(config.source);
+                var layer = new itowns.ElevationLayer(config.id, config);
+                view.addLayer(layer).then(menuGlobe.addLayerGUI.bind(menuGlobe));
+            }
+            itowns.Fetcher.json('./layers/JSONLayers/WORLD_DTM.json').then(addElevationLayerFromConfig);
+            itowns.Fetcher.json('./layers/JSONLayers/IGN_MNT_HIGHRES.json').then(addElevationLayerFromConfig);
+
             // Create a new Layer 3d-tiles For DiscreteLOD
             // -------------------------------------------
-            var $3dTilesLayerDiscreteLOD = new itowns.GeometryLayer('3d-tiles-discrete-lod', new itowns.THREE.Group());
+            /*var $3dTilesLayerDiscreteLOD = new itowns.GeometryLayer('3d-tiles-discrete-lod', new itowns.THREE.Group());
 
             $3dTilesLayerDiscreteLOD.name = 'DiscreteLOD';
             $3dTilesLayerDiscreteLOD.url = 'https://raw.githubusercontent.com/AnalyticalGraphicsInc/3d-tiles-samples/master/tilesets/TilesetWithDiscreteLOD/tileset.json';
@@ -47,6 +57,7 @@
             $3dTilesLayerDiscreteLOD.overrideMaterials = true;  // custom cesium shaders are not functional
 
             itowns.View.prototype.addLayer.call(view, $3dTilesLayerDiscreteLOD);
+            */
 
             // Create a new Layer 3d-tiles For Viewer Request Volume
             // -----------------------------------------------------
@@ -54,7 +65,7 @@
             var $3dTilesLayerRequestVolume = new itowns.GeometryLayer('3d-tiles-request-volume', new itowns.THREE.Group());
 
             $3dTilesLayerRequestVolume.name = 'RequestVolume';
-            $3dTilesLayerRequestVolume.url = 'https://raw.githubusercontent.com/AnalyticalGraphicsInc/3d-tiles-samples/master/tilesets/TilesetWithRequestVolume/tileset.json';
+            $3dTilesLayerRequestVolume.url = 'http://localhost:8080/cache_test/cambremer/root.json';
             $3dTilesLayerRequestVolume.protocol = '3d-tiles'
             $3dTilesLayerRequestVolume.overrideMaterials = true;  // custom cesium shaders are not functional
             $3dTilesLayerRequestVolume.sseThreshold = 1;
@@ -64,14 +75,14 @@
             // Add the UI Debug
             var d = new debug.Debug(view, menuGlobe.gui);
             debug.createTileDebugUI(menuGlobe.gui, view, view.tileLayer, d);
-            debug.create3dTilesDebugUI(menuGlobe.gui, view, $3dTilesLayerDiscreteLOD, d);
+            // debug.create3dTilesDebugUI(menuGlobe.gui, view, $3dTilesLayerDiscreteLOD, d);
             debug.create3dTilesDebugUI(menuGlobe.gui, view, $3dTilesLayerRequestVolume, d);
-            d.zoom = function() {
-                view.camera.camera3D.position.set(1215013.9, -4736315.5, 4081597.5);
-                view.camera.camera3D.quaternion.set(0.9108514448729665, 0.13456816437801225, 0.1107206134840362, 0.3741416847378546);
-                view.notifyChange(view.camera.camera3D);
-            }
-            menuGlobe.gui.add(d, 'zoom').name('Go to point cloud');
+            // d.zoom = function() {
+            //     view.camera.camera3D.position.set(1215013.9, -4736315.5, 4081597.5);
+            //     view.camera.camera3D.quaternion.set(0.9108514448729665, 0.13456816437801225, 0.1107206134840362, 0.3741416847378546);
+            //     view.notifyChange(view.camera.camera3D);
+            // }
+            // menuGlobe.gui.add(d, 'zoom').name('Go to point cloud');
 
 // Picking example - - - - - - - - - - -- - - - -- - - - -- - - - -- - - - -- - - - -- - - - -
             function findBatchTableParent(object) {
