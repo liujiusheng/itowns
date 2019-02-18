@@ -66,9 +66,23 @@
 
             $3dTilesLayerRequestVolume.name = 'RequestVolume';
             $3dTilesLayerRequestVolume.url = 'http://localhost:8080/cache_test/cambremer/root.json';
+            $3dTilesLayerRequestVolume.url = 'http://localhost:8080/cache_test/idf/root.json';
+            $3dTilesLayerRequestVolume.url = 'http://localhost:8080/cache_test/paris/root.json';
             $3dTilesLayerRequestVolume.protocol = '3d-tiles'
-            $3dTilesLayerRequestVolume.overrideMaterials = true;  // custom cesium shaders are not functional
+            // $3dTilesLayerRequestVolume.overrideMaterials = true;  // custom cesium shaders are not functional
             $3dTilesLayerRequestVolume.sseThreshold = 1;
+
+            $3dTilesLayerRequestVolume.overrideMaterials = new
+            itowns.THREE.MeshPhongMaterial( {
+                 color: 0xFFFFFF,
+                 emissive: 0x000000,
+                 metalness: 1,
+                 roughness: 1,
+                 transparent: false,
+                 depthTest: true,
+                 side: itowns.THREE.DoubleSide
+             } );
+
             // add an event for have information when you move your mouse on a building
             itowns.View.prototype.addLayer.call(view, $3dTilesLayerRequestVolume).then(function _() { window.addEventListener('mousemove', picking, false); })
 
