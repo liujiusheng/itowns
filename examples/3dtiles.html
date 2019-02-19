@@ -21,7 +21,10 @@
         <script src="../dist/debug.js"></script>
         <script type="text/javascript">
             /* global itowns,document,GuiTools*/
-            var positionOnGlobe = { longitude: 0.048, latitude: 49.151, altitude: 5000 }
+            // example cambremer
+            // var positionOnGlobe = { longitude: 0.048, latitude: 49.151, altitude: 5000 }
+            // example paris
+            var positionOnGlobe = { longitude: 2.346060, latitude: 48.862264, altitude: 20000 }
             // iTowns namespace defined here
             var viewerDiv = document.getElementById('viewerDiv');
 
@@ -67,21 +70,21 @@
             $3dTilesLayerRequestVolume.name = 'RequestVolume';
             $3dTilesLayerRequestVolume.url = 'http://localhost:8080/cache_test/cambremer/root.json';
             $3dTilesLayerRequestVolume.url = 'http://localhost:8080/cache_test/idf/root.json';
-            $3dTilesLayerRequestVolume.url = 'http://localhost:8080/cache_test/paris/root.json';
+            // $3dTilesLayerRequestVolume.url = 'http://localhost:8080/cache_test/paris/root.json';
             $3dTilesLayerRequestVolume.protocol = '3d-tiles'
-            // $3dTilesLayerRequestVolume.overrideMaterials = true;  // custom cesium shaders are not functional
+            $3dTilesLayerRequestVolume.overrideMaterials = true;  // custom cesium shaders are not functional
             $3dTilesLayerRequestVolume.sseThreshold = 1;
 
-            $3dTilesLayerRequestVolume.overrideMaterials = new
-            itowns.THREE.MeshPhongMaterial( {
-                 color: 0xFFFFFF,
-                 emissive: 0x000000,
-                 metalness: 1,
-                 roughness: 1,
-                 transparent: false,
-                 depthTest: true,
-                 side: itowns.THREE.DoubleSide
-             } );
+            // $3dTilesLayerRequestVolume.overrideMaterials = new
+            // itowns.THREE.MeshPhongMaterial( {
+            //      color: 0xFFFFFF,
+            //      emissive: 0x000000,
+            //      metalness: 1,
+            //      roughness: 1,
+            //      transparent: false,
+            //      depthTest: true,
+            //      side: itowns.THREE.DoubleSide
+            //  } );
 
             // add an event for have information when you move your mouse on a building
             itowns.View.prototype.addLayer.call(view, $3dTilesLayerRequestVolume).then(function _() { window.addEventListener('mousemove', picking, false); })
