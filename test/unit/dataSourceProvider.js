@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import assert from 'assert';
-import { updateLayeredMaterialNodeImagery } from 'Process/LayeredMaterialNodeProcessing';
+import { updateLayeredMaterialNodeImagery, updateLayeredMaterialNodeElevation } from 'Process/LayeredMaterialNodeProcessing';
 import FeatureProcessing from 'Process/FeatureProcessing';
 import TileMesh from 'Core/TileMesh';
 import Extent from 'Core/Geographic/Extent';
@@ -12,16 +12,32 @@ import WMSSource from 'Source/WMSSource';
 import WFSSource from 'Source/WFSSource';
 import LayerUpdateState from 'Layer/LayerUpdateState';
 import ColorLayer from 'Layer/ColorLayer';
+import ElevationLayer from 'Layer/ElevationLayer';
 import GeometryLayer from 'Layer/GeometryLayer';
 import GlobeLayer from 'Core/Prefab/Globe/GlobeLayer';
+import textureConverter from 'Converter/textureConverter';
 import Feature2Mesh from 'Converter/Feature2Mesh';
-import MaterialLayer from 'Renderer/MaterialLayer';
+import LayeredMaterial from 'Renderer/LayeredMaterial';
 
 const holes = require('../data/geojson/holes.geojson.json');
 
 supportedFetchers.set('image/png', () => Promise.resolve(new THREE.Texture()));
 supportedFetchers.set('application/json', () => Promise.resolve(holes));
 
+global.document = {
+    createElement: () => ({
+        getContext: () => ({
+            fillRect: () => { },
+            moveTo: () => { },
+            lineTo: () => { },
+            beginPath: () => { },
+            stroke: () => { },
+            fill: () => { },
+            arc: () => { },
+            canvas: { width: 256, height: 256 },
+        }),
+    }),
+};
 
 describe('Provide in Sources', function () {
     // Misc var to initialize a TileMesh instance
@@ -29,7 +45,7 @@ describe('Provide in Sources', function () {
     geom.OBB = new OBB(new THREE.Vector3(), new THREE.Vector3(1, 1, 1));
     const extent = new Extent('EPSG:4326', 0, 10, 0, 10);
     const zoom = 4;
-    const material = { };
+    const material = new LayeredMaterial();
 
     // Mock scheduler
     const context = {
@@ -45,10 +61,20 @@ describe('Provide in Sources', function () {
         },
     };
 
-    const colorlayer = new ColorLayer();
-    const nodeLayer = new MaterialLayer(material, colorlayer);
-    material.getLayer = () => nodeLayer;
     const globelayer = new GlobeLayer('globe', new THREE.Group());
+    const colorlayer = new ColorLayer('color');
+    const elevationlayer = new ElevationLayer('elevation');
+
+    globelayer.attach(colorlayer);
+    globelayer.attach(elevationlayer);
+
+    material.addLayer(colorlayer);
+    material.addLayer(elevationlayer);
+
+    const nodeLayer = material.getLayer(colorlayer.id);
+    const nodeLayerElevation = material.getLayer(elevationlayer.id);
+
+
     const featureLayer = new GeometryLayer('geom', new THREE.Group());
     featureLayer.update = FeatureProcessing.update;
     featureLayer.projection = 'EPSG:4978';
@@ -72,7 +98,7 @@ describe('Provide in Sources', function () {
     featureLayer.convert = Feature2Mesh.convert({ color, extrude });
     globelayer.attach(featureLayer);
 
-    context.elevationLayers = [];
+    context.elevationLayers = [elevationlayer];
     context.colorLayers = [colorlayer];
 
     beforeEach('reset state', function () {
@@ -100,6 +126,33 @@ describe('Provide in Sources', function () {
         updateLayeredMaterialNodeImagery(context, colorlayer, tile, tile.parent);
         updateLayeredMaterialNodeImagery(context, colorlayer, tile, tile.parent);
         DataSourceProvider.executeCommand(context.scheduler.commands[0]).then((textures) => {
+            assert.equal(textures[0].coords.zoom, zoom);
+            assert.equal(textures[0].coords.row, 7);
+            assert.equal(textures[0].coords.col, 16);
+        });
+    });
+
+    it('should get wmts texture elevation with DataSourceProvider', () => {
+        elevationlayer.source = new WMTSSource({
+            url: 'http://',
+            name: 'name',
+            format: 'image/png',
+            tileMatrixSet: 'WGS84G',
+            zoom: {
+                min: 0,
+                max: 8,
+            },
+        });
+
+        const tile = new TileMesh(geom, material, colorlayer, extent, zoom);
+        material.visible = true;
+        nodeLayerElevation.level = 0;
+        tile.parent = {};
+
+        updateLayeredMaterialNodeElevation(context, colorlayer, tile, tile.parent);
+        updateLayeredMaterialNodeElevation(context, colorlayer, tile, tile.parent);
+        DataSourceProvider.executeCommand(context.scheduler.commands[0]).then((textures) => {
+            // console.log('textures', textures);
             assert.equal(textures[0].coords.zoom, zoom);
             assert.equal(textures[0].coords.row, 7);
             assert.equal(textures[0].coords.col, 16);
@@ -161,20 +214,24 @@ describe('Provide in Sources', function () {
             assert.equal(features[0].children.length, 3);
         });
     });
-    it('should get 1 mesh with WFS source and DataSourceProvider and mergeFeatures == true', () => {
+    it('should get 1 texture with WFS source and DataSourceProvider', () => {
         const tile = new TileMesh(
             geom,
             material,
             colorlayer,
-            new Extent('EPSG:4326', -10, 0, 0, 10),
+            new Extent('EPSG:4326', -10, 10, 0, 10),
             4);
         tile.material.visible = true;
         tile.parent = { pendingSubdivision: false };
         tile.material.isColorLayerLoaded = () => true;
-        featureLayer.mergeFeatures = true;
+        featureLayer.convert = textureConverter.convert;
+        featureLayer.style = {};
+        featureLayer.isColorLayer = true;
+        featureLayer.isGeometryLayer = false;
         featureLayer.update(context, featureLayer, tile);
-        DataSourceProvider.executeCommand(context.scheduler.commands[0]).then((features) => {
-            assert.equal(features[0].children.length, 0);
+        DataSourceProvider.executeCommand(context.scheduler.commands[0]).then((textures) => {
+            assert.equal(textures.length, 1);
+            assert.equal(textures[0].coords.zoom, 4);
         });
     });
 });
