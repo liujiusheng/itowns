@@ -33,7 +33,7 @@ here](http://www.itowns-project.org/itowns/examples/). Some examples available:
 
 [![iTowns examples](http://www.itowns-project.org/images/montage.jpg)](http://www.itowns-project.org/itowns/examples/index.html)
 
-## How to use
+## 怎样使用
 
 You can use it through npm (the preferred way) or download a bundle from our
 github release page.
