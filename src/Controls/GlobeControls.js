@@ -473,8 +473,6 @@ function GlobeControls(view, targetCoordinate, range, globeRadius, options = {})
             case states.ORBIT:
             case states.PANORAMIC: {
                 // ctrl+鼠标左键
-                // eslint-disable-next-line no-console
-                console.info('global2');
                 rotateEnd.copy(coords);
                 rotateDelta.subVectors(rotateEnd, rotateStart);
 

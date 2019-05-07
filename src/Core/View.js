@@ -354,7 +354,7 @@ View.prototype.getLayers = function getLayers(filter) {
 };
 
 /**
- * Gets the layer by identifier.
+ * 通过图层id获取图层
  *
  * @param {String}  layerId  The layer identifier
  * @return {Layer}  The layer by identifier.

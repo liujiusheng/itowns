@@ -59,10 +59,11 @@ and open the template in the editor.
                 view.addLayer(layer).then(menuGlobe.addLayerGUI.bind(menuGlobe));
             }
 
+            // 可以放大到意大利北部山区查看效果，其它地方都没有数据
             itowns.Fetcher.json('examples/layers/JSONLayers/WORLD_DTM.json')
                 .then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
-            itowns.Fetcher.json('examples/layers/JSONLayers/IGN_MNT_HIGHRES.json')
-                .then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
+            // itowns.Fetcher.json('examples/layers/JSONLayers/IGN_MNT_HIGHRES.json')
+            //     .then(createWMTSSourceFromConfig).then(addElevationLayerFromConfig);
 
             const atmosphere = view.getLayerById('atmosphere');
             menuGlobe.addGUI('RealisticLighting', false, function (v) {
