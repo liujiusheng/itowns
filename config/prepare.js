@@ -22,10 +22,10 @@ if (nodeMajorVersion < minNodeMajorVersion) {
     console.log(chalk.green('Node.js version :', process.versions.node));
 }
 
-const npmVersion = execSync('npm --version');
-if (npmVersion) {
-    console.log(chalk.green('Npm version :', npmVersion), '\n');
-}
+// const npmVersion = execSync('npm --version');
+// if (npmVersion) {
+//     console.log(chalk.green('Npm version :', npmVersion), '\n');
+// }
 
 // Copy and patch THREE Examples Files
 const copyfiles = require('copyfiles');

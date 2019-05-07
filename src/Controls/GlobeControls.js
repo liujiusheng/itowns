@@ -17,18 +17,18 @@ const spherical = new THREE.Spherical(1.0, 0.01, 0);
 const sphericalDelta = new THREE.Spherical(1.0, 0, 0);
 let orbitScale = 1.0;
 
-// Pan
+// Pan,右键
 const panStart = new THREE.Vector2();
 const panEnd = new THREE.Vector2();
 const panDelta = new THREE.Vector2();
 const panOffset = new THREE.Vector3();
 
-// Dolly
+// Dolly,鼠标滚轮
 const dollyStart = new THREE.Vector2();
 const dollyEnd = new THREE.Vector2();
 const dollyDelta = new THREE.Vector2();
 
-// Globe move
+// Globe move,鼠标左键
 const moveAroundGlobe = new THREE.Quaternion();
 const cameraTarget = new THREE.Object3D();
 cameraTarget.matrixWorldInverse = new THREE.Matrix4();
@@ -472,6 +472,9 @@ function GlobeControls(view, targetCoordinate, range, globeRadius, options = {})
         switch (state) {
             case states.ORBIT:
             case states.PANORAMIC: {
+                // ctrl+鼠标左键
+                // eslint-disable-next-line no-console
+                console.info('global2');
                 rotateEnd.copy(coords);
                 rotateDelta.subVectors(rotateEnd, rotateStart);
 

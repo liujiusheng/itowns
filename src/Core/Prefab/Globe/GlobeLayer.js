@@ -5,7 +5,7 @@ import Extent from 'Core/Geographic/Extent';
 import BuilderEllipsoidTile from 'Core/Prefab/Globe/BuilderEllipsoidTile';
 import { SIZE_DIAGONAL_TEXTURE } from 'Provider/OGCWebServiceHelper';
 
-// matrix to convert sphere to ellipsoid
+// 转换球为椭球的矩阵
 const worldToScaledEllipsoid = new THREE.Matrix4();
 // camera's position in worldToScaledEllipsoid system
 const cameraPosition = new THREE.Vector3();
@@ -15,9 +15,7 @@ let magnitudeSquared = 0.0;
 const scaledHorizonCullingPoint = new THREE.Vector3();
 
 /**
- * @property {boolean} isGlobeLayer - Used to checkout whether this layer is a
- * GlobeLayer. Default is true. You should not change this, as it is used
- * internally for optimisation.
+ * @property {boolean} isGlobeLayer - 用于判断图层是否为GlobeLayer,默认为true，它是一个内部优化的变量，请不要修改这个值。
  */
 class GlobeLayer extends TiledGeometryLayer {
     /**

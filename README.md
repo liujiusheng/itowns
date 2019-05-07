@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/iTowns/itowns/badge.svg?branch=master)](https://coveralls.io/github/iTowns/itowns?branch=master)
 [![Build Status](https://travis-ci.com/iTowns/itowns.svg?branch=master)](https://travis-ci.com/iTowns/itowns)
 
-## What is it?
+## 这是什么？
 
 iTowns is a [Three.js](https://threejs.org/)-based framework written in
 Javascript/WebGL for visualizing 3D geospatial data.
@@ -16,7 +16,7 @@ wiki](https://github.com/iTowns/itowns/wiki/Supported-Features).
 
 ![iTowns screenshot](https://raw.githubusercontent.com/iTowns/itowns.github.io/master/images/itownsReleaseXS.jpg)
 
-## Documentation and examples
+## 文档和示例
 
 The official documentation is [available
 here](http://www.itowns-project.org/itowns/docs/). It contains tutorials to help
@@ -35,63 +35,14 @@ here](http://www.itowns-project.org/itowns/examples/). Some examples available:
 
 ## 怎样使用
 
-You can use it through npm (the preferred way) or download a bundle from our
-github release page.
-
-### With npm
-
-In your project:
+可以通过npm安装，也可以文件的形式单独引入
 
 ```bash
 npm install --save itowns
 ```
 
-This package contains the ES5-compatible sources of iTowns.
-
-If you're using a module bundler (like wepback), you can directly write
-`require('itowns')` in your code.
-
-Alternatively, we provide a bundle you can directly include in your html files
-that exposes `itowns` in `window`:
+或者单独引入
 
 ```html
 <script src="node_modules/itowns/dist/itowns.js"></script>
 ```
-
-**/!\ Please note that this bundle also contains the dependencies**.
-
-### From a release bundle
-
-See our [release page](https://github.com/iTowns/itowns/releases). Note that
-there isn't a lot of support for older version of iTowns, we highly recommand to
-use the last release everytime.
-
-## Contributing
-
-If you are interested in contributing to iTowns, please read the [CONTRIBUTING
-guide](CONTRIBUTING.md) and the [CODING guide](CODING.md).
-
-iTowns has been redesigned from this [early version](https://github.com/iTowns/itowns-legacy).
-
-## Licence
-
-iTowns is dual-licenced under Cecill-B V1.0 and MIT.
-Incorporated libraries are published under their original licences.
-
-See [LICENSE.md](LICENSE.md) for more information.
-
-## Support
-
-iTowns is an original work from French IGN, [MATIS research
-laboratory](http://recherche.ign.fr/labos/matis/).  It has been funded through
-various research programs involving the French National Research Agency, Cap
-Digital, UPMC, Mines ParisTec, CNRS, LCPC.
-
-iTowns is currently maintained by [IGN](http://www.ign.fr) and
-[AtolCD](https://www.atolcd.com), and has been maintained by [Oslandia]() in the
-past. It has also received contributions from people [listed
-here](CONTRIBUTORS.md).
-
-[![IGN](https://raw.githubusercontent.com/iTowns/itowns.github.io/master/images/logo_ign.png)](https://www.ign.fr)
-[![AtolCD](https://raw.githubusercontent.com/iTowns/itowns.github.io/master/images/logo_atolcd.jpg)](https://www.atolcd.com)
-[![Oslandia](https://raw.githubusercontent.com/iTowns/itowns.github.io/master/images/logo_oslandia.png)](https://www.oslandia.com)

@@ -12,27 +12,27 @@ import Coordinates from 'Core/Geographic/Coordinates';
 import { ellipsoidSizes } from 'Core/Math/Ellipsoid';
 
 /**
- * Fires when the view is completely loaded. Controls and view's functions can be called then.
+ * 地图初始化成功事件
  * @event GlobeView#initialized
  * @property target {view} dispatched on view
  * @property type {string} initialized
  */
 /**
- * Fires when a layer is added
+ * 图层添加事件
  * @event GlobeView#layer-added
  * @property layerId {string} the id of the layer
  * @property target {view} dispatched on view
  * @property type {string} layers-added
  */
 /**
- * Fires when a layer is removed
+ * 图层移除事件
  * @event GlobeView#layer-removed
  * @property layerId {string} the id of the layer
  * @property target {view} dispatched on view
  * @property type {string} layers-added
  */
 /**
- * Fires when the layers oder has changed
+ * 图层顺序改变
  * @event GlobeView#layers-order-changed
  * @property new {object}
  * @property new.sequence {array}
@@ -50,7 +50,7 @@ import { ellipsoidSizes } from 'Core/Math/Ellipsoid';
 
 
 /**
- * Globe's EVENT
+ * 球面视图的事件
  * @property GLOBE_INITIALIZED {string} emit one time when globe is initialized
  * @property LAYER_ADDED {string} emit when layer id added in viewer
  * @property LAYER_REMOVED {string} emit when layer id removed in viewer
@@ -70,7 +70,7 @@ export function createGlobeLayer(id, options = {}) {
 }
 
 /**
- * Creates a view of a globe.
+ * 创建球面视图
  *
  * @constructor
  *
@@ -84,11 +84,9 @@ export function createGlobeLayer(id, options = {}) {
  * var position = { longitude: 2.35, latitude: 48.8, altitude: 25e6 };
  * var view = new itowns.GlobeView(viewerDiv, position);
  *
- * @param {HTMLDivElement} viewerDiv - Where to attach the view and display it
+ * @param {HTMLDivElement} viewerDiv - 用于渲染地球的html节点
  * in the DOM.
- * @param {object|Coordinates} coordCarto - An object containing three
- * properties: longitude, latitude and altitude. It will help placing the camera
- * on the globe at the creation.
+ * @param {object|Coordinates} coordCarto - 一个包含经度（longitude）、纬度（latitude）、高度（altitude）的对象，用于定位相机的位置
  * @param {object=} options - See options of {@link View}.
  */
 function GlobeView(viewerDiv, coordCarto, options = {}) {
@@ -157,6 +155,13 @@ function GlobeView(viewerDiv, coordCarto, options = {}) {
 GlobeView.prototype = Object.create(View.prototype);
 GlobeView.prototype.constructor = GlobeView;
 
+/**
+ * 添加图层
+ * @example
+ * view.addLayer(layer)
+ * @param {object} layer 图层对象
+ * @return {layerPromise}
+ */
 GlobeView.prototype.addLayer = function addLayer(layer) {
     if (!layer) {
         return new Promise((resolve, reject) => reject(new Error('layer is undefined')));
@@ -181,10 +186,10 @@ GlobeView.prototype.addLayer = function addLayer(layer) {
 };
 
 /**
- * Removes a specific imagery layer from the current layer list. This removes layers inserted with attach().
+ * 移除图层 This removes layers inserted with attach().
  * @example
  * view.removeLayer('layerId');
- * @param      {string}   layerId      The identifier
+ * @param      {string}   layerId      图层id
  * @return     {boolean}
  */
 GlobeView.prototype.removeLayer = function removeLayer(layerId) {

@@ -1,3 +1,6 @@
+/**
+ * 这是一个瓦片图层几何对象的基类
+ */
 import * as THREE from 'three';
 import computeBuffers from 'Core/Prefab/computeBufferTileGeometry';
 
