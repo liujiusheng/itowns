@@ -34,10 +34,13 @@ class StateControl {
          * The camera loot at target and moves at a constant distance from it
          */
         this.ORBIT = {
-            mouseButton: THREE.MOUSE.LEFT,
-            keyboard: CONTROL_KEYS.CTRL,
+            mouseButton: THREE.MOUSE.RIGHT,
+            up: CONTROL_KEYS.UP,
+            bottom: CONTROL_KEYS.BOTTOM,
+            left: CONTROL_KEYS.LEFT,
+            right: CONTROL_KEYS.RIGHT,
             enable: true,
-            finger: 2,
+            finger: 3,
         };
         /**
          * The camera loot at target and moves forward and backward from this point
@@ -50,14 +53,14 @@ class StateControl {
          * the camera moves parallel to the current view plane
          */
         this.PAN = {
-            mouseButton: THREE.MOUSE.RIGHT,
-            up: CONTROL_KEYS.UP,
-            bottom: CONTROL_KEYS.BOTTOM,
-            left: CONTROL_KEYS.LEFT,
-            right: CONTROL_KEYS.RIGHT,
+            mouseButton: THREE.MOUSE.LEFT,
+            keyboard: CONTROL_KEYS.CTRL,
             enable: true,
-            finger: 3,
+            finger: 2,
         };
+        /**
+         * 最常用的鼠标左键拖动
+         */
         this.MOVE_GLOBE = {
             mouseButton: THREE.MOUSE.LEFT,
             enable: true,
