@@ -996,7 +996,7 @@ GlobeControls.prototype.getCameraTargetPosition = function getCameraTargetPositi
 };
 
 /**
- * Returns the "range": the distance in meters between the camera and the current central point on the screen.
+ * 计算相机位置与当前中心点的距离，单位为米
  * @return {number} number
  */
 GlobeControls.prototype.getRange = function getRange() {
@@ -1004,8 +1004,8 @@ GlobeControls.prototype.getRange = function getRange() {
 };
 
 /**
- * Returns the tilt of the current camera in degrees.
- * @return {Angle} number - The angle of the rotation in degrees.
+ * 计算相机的倾斜度，单位为度
+ * @return {Angle} number - 相机倾斜角度
  */
 GlobeControls.prototype.getTilt = function getTilt() {
     return CameraUtils.getTransformCameraLookingAtTarget(this._view, this.camera).tilt;
@@ -1083,7 +1083,7 @@ GlobeControls.prototype.isAnimationEnabled = function isAnimationEnabled() {
 };
 
 /**
- * Returns the actual zoom. The zoom will always be between the [getMinZoom(), getMaxZoom()].
+ * 返回当前缩放层级，层级范围在最小和最大层级之间 [getMinZoom(), getMaxZoom()].
  * @return     {number}  The zoom .
  */
 GlobeControls.prototype.getZoom = function getZoom() {

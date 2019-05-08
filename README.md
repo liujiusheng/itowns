@@ -40,6 +40,9 @@ here](http://www.itowns-project.org/itowns/examples/). Some examples available:
 ```bash
 npm install --save itowns
 ```
+```bash
+yarn add itowns
+```
 
 或者单独引入
 
@@ -54,3 +57,7 @@ npm install --save itowns
 
 在view.controls上添加itowns.CONTROL_EVENTS.RANGE_CHANGED事件，
 在事件回调函数内使用view.controls.getZoom()方法获取
+
+如何向地图添加bim模型？
+
+先研究bim模型的格式有哪些，再确定three.js支持哪些，再研究如何加载

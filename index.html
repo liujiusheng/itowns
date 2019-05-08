@@ -57,6 +57,21 @@ and open the template in the editor.
             function addElevationLayerFromConfig(config) {
                 var layer = new itowns.ElevationLayer(config.id, config);
                 view.addLayer(layer).then(menuGlobe.addLayerGUI.bind(menuGlobe));
+                // 加载卫星模型
+                // function loadModel() {return;
+                //     satellite.traverse( function ( child ) {
+                //         if ( child.isMesh ) child.material.map = texture;
+                //     } );
+                //     itowns.DEMUtils.placeObjectOnGround(layer,view.referenceCRS, satellite);
+                // }
+                // let manager = new itowns.THREE.LoadingManager( loadModel );
+                // let textureLoader = new itowns.THREE.TextureLoader( manager );
+                // let texture = textureLoader.load( 'examples/layers/satellite/satellite.jpg' );
+                // let objloader = new itowns.THREE.OBJLoader( manager );
+                // objloader.load( 'examples/layers/satellite/satellite.obj', function ( obj ) {
+                //     // satellite = obj;
+                //     itowns.DEMUtils.placeObjectOnGround(layer,view.referenceCRS, obj);
+                // });
             }
 
             // 可以放大到意大利北部山区查看效果，其它地方都没有数据
@@ -84,6 +99,8 @@ and open the template in the editor.
                 // eslint-disable-next-line no-console
                 console.log(view.controls.getZoom());
             });
+
+            
 
             const d = new debug.Debug(view, menuGlobe.gui);
             debug.createTileDebugUI(menuGlobe.gui, view, view.tileLayer, d);
