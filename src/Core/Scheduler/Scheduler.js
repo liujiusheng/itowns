@@ -307,8 +307,6 @@ Scheduler.prototype.resetCommandsCount = function resetCommandsCount(type) {
 
 Scheduler.prototype.deQueue = function deQueue(queue) {
     var st = drawNextLayer(queue.storages);
-    // eslint-disable-next-line no-console
-    console.log('ttt', st);
     while (st && st.length > 0) {
         // extent就是在这里生成的，里面包含了xyz
         var cmd = st.dequeue();

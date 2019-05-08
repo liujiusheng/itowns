@@ -46,3 +46,11 @@ npm install --save itowns
 ```html
 <script src="node_modules/itowns/dist/itowns.js"></script>
 ```
+
+
+## 还需要搞明白的问题
+
+怎样获取鼠标点击位置的xyz？
+
+在view.controls上添加itowns.CONTROL_EVENTS.RANGE_CHANGED事件，
+在事件回调函数内使用view.controls.getZoom()方法获取

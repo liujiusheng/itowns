@@ -52,10 +52,9 @@ const Projection = {
 
     WGS84toWMTS(bbox, target = new Extent('WMTS:WGS84G', 0, 0, 0)) {
         bbox.dimensions(dim);
-
+        // 计算瓦片xyz的公式
         var zoom = Math.floor(
             Math.log(Math.PI / MathExt.degToRad(dim.y)) / LOG_TWO + 0.5);
-
         var nY = 2 ** zoom;
         var nX = 2 * nY;
 

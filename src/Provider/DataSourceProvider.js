@@ -96,8 +96,6 @@ export default {
 
             // If source, we must fetch and convert data
             // URL of the resource you want to fetch
-            // eslint-disable-next-line no-console
-            console.log('坐标位置，到这个地方已经转换成xyz了，需要进一步跟踪到它是如何转换的：', extSource);
             const url = source.urlFromExtent(extSource);
 
             // Already fetched and parsed data that can be used

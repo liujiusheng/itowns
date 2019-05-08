@@ -119,6 +119,8 @@ class GlobeLayer extends TiledGeometryLayer {
         return isOccluded;
     }
 
+
+    // 通过相机计算当前zoom
     computeTileZoomFromDistanceCamera(distance, camera) {
         const preSinus =
             SIZE_DIAGONAL_TEXTURE * (this.sseSubdivisionThreshold * 0.5) / camera._preSSE / ellipsoidSizes.x;
@@ -133,7 +135,8 @@ class GlobeLayer extends TiledGeometryLayer {
         // adjust with bounding sphere rayon
         sinus = (distance - radius) * preSinus;
         zoom = Math.log(Math.PI / (2.0 * Math.asin(sinus))) / Math.log(2);
-
+        // eslint-disable-next-line no-console
+        console.log('sss', zoom);
         return isNaN(zoom) ? 0 : Math.round(zoom);
     }
 

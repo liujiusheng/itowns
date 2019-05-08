@@ -74,7 +74,15 @@ and open the template in the editor.
             // eslint-disable-next-line prefer-arrow-callback
             view.addEventListener(itowns.GLOBE_VIEW_EVENTS.GLOBE_INITIALIZED, function m() {
                 // eslint-disable-next-line no-console
-                console.info('Globe initialized');
+                console.info('Globe initialized2');
+
+            });
+
+            // 通过此方法获取当前层级
+            // eslint-disable-next-line prefer-arrow-callback
+            view.controls.addEventListener(itowns.CONTROL_EVENTS.RANGE_CHANGED, function m() {
+                // eslint-disable-next-line no-console
+                console.log(view.controls.getZoom());
             });
 
             const d = new debug.Debug(view, menuGlobe.gui);
